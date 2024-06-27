@@ -5,7 +5,7 @@ namespace: default
 configmap:
   name: helmappconfigmapv1.1
   data:
-    CUSTOM_HEADER: "This app was deployed with helM!"
+    CUSTOM_HEADER: "This is dev environment"
 
 
 image:
