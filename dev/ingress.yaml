@@ -1,13 +1,18 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress
+  name: myapp-ingress
   namespace: myapp
 spec:
+  ingressClassName: nginx-example
   rules:
   - host: myapp.com
     http:
       paths:
-      - backend:
-          serviceName: nginx-svc 
-          servicePort: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-svc
+            port:
+              number: 80
