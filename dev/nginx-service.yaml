@@ -11,3 +11,9 @@ spec:
   ports:
     - port: 80
       targetPort: 80
+status:
+  loadBalancer:
+    ingress:
+      - ip: 10.4.20.110
+      - ip: 10.4.20.128
+      - ip: 10.4.20.129
