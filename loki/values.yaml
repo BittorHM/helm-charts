@@ -316,7 +316,7 @@ loki:
     #   chunks: FIXME
     #   ruler: FIXME
     #   admin: FIXME
-    type: gcs
+    type: filesystem
     s3:
       s3: null
       endpoint: null
@@ -1214,7 +1214,7 @@ migrate:
 # Configuration for the single binary node(s)
 singleBinary:
   # -- Number of replicas for the single binary
-  replicas: 0
+  replicas: 1
   autoscaling:
     # -- Enable autoscaling
     enabled: false
