@@ -316,7 +316,7 @@ loki:
     #   chunks: FIXME
     #   ruler: FIXME
     #   admin: FIXME
-    type: filesystem
+    type: gcs
     s3:
       s3: null
       endpoint: null
