@@ -1310,6 +1310,7 @@ singleBinary:
 
 # Configuration for the write pod(s)
 write:
+  enabled: false
   # -- Number of replicas for the write
   replicas: 0
   autoscaling:
@@ -1431,6 +1432,7 @@ write:
     annotations: {}
 # --  Configuration for the read pod(s)
 read:
+  enabled: false
   # -- Number of replicas for the read
   replicas: 3
   autoscaling:
@@ -1540,6 +1542,7 @@ read:
     annotations: {}
 # --  Configuration for the backend pod(s)
 backend:
+  enabled: false
   # -- Number of replicas for the backend
   replicas: 3
   autoscaling:
