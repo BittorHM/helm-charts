@@ -230,12 +230,19 @@ loki:
   schemaConfig:
     configs:
     - from: "2020-09-07"
-      store: boltdb-shipper
-      object_store: filesystem
-      schema: v11
+      store: tsdb
+      object_store: s3
+      schema: v13
       index:
         prefix: loki_index_
         period: 24h
+    ingester:
+      chunk_encoding: snappy
+    tracing:
+      enabled: true
+    querier:
+      # Default is 4, if you have enough memory and CPU you can increase, reduce if OOMing
+      max_concurrent: 4
 
   # -- Check https://grafana.com/docs/loki/latest/configuration/#storage_config for more info on how to configure storages
   storageConfig:
@@ -386,7 +393,7 @@ ingester:
   # -- Kind of deployment [StatefulSet/Deployment]
   kind: StatefulSet
   # -- Number of replicas for the ingester
-  replicas: 1
+  replicas: 3
   # -- hostAliases to add
   hostAliases: []
   #  - ip: 1.2.3.4
@@ -525,7 +532,8 @@ ingester:
 # Configuration for the distributor
 distributor:
   # -- Number of replicas for the distributor
-  replicas: 1
+  replicas: 3
+  maxUnavailable: 2
   # -- hostAliases to add
   hostAliases: []
   #  - ip: 1.2.3.4
@@ -623,7 +631,8 @@ distributor:
 # Configuration for the querier
 querier:
   # -- Number of replicas for the querier
-  replicas: 1
+  replicas: 3
+  maxUnavailable: 2
   # -- hostAliases to add
   hostAliases: []
   #  - ip: 1.2.3.4
@@ -747,7 +756,8 @@ querier:
 # Configuration for the query-frontend
 queryFrontend:
   # -- Number of replicas for the query-frontend
-  replicas: 1
+  replicas: 2
+  maxUnavailable: 1
   # -- hostAliases to add
   hostAliases: []
   #  - ip: 1.2.3.4
@@ -843,7 +853,7 @@ queryFrontend:
 # Configuration for the query-scheduler
 queryScheduler:
   # -- Specifies whether the query-scheduler should be decoupled from the query-frontend
-  enabled: false
+  enabled: true
   # -- Number of replicas for the query-scheduler.
   # It should be lower than `-querier.max-concurrent` to avoid generating back-pressure in queriers;
   # it's also recommended that this value evenly divides the latter
@@ -1335,7 +1345,7 @@ compactor:
   # -- Number of replicas for the compactor
   replicas: 1
   # -- Specifies whether compactor should be enabled
-  enabled: false
+  enabled: true
   # -- hostAliases to add
   hostAliases: []
   #  - ip: 1.2.3.4
@@ -1605,9 +1615,10 @@ ruler:
 # Configuration for the index-gateway
 indexGateway:
   # -- Specifies whether the index-gateway should be enabled
-  enabled: false
+  enabled: true
   # -- Number of replicas for the index-gateway
-  replicas: 1
+  replicas: 2
+  maxUnavailable: 1
   # -- Whether the index gateway should join the memberlist hashring
   joinMemberlist: true
   # -- hostAliases to add
@@ -1692,6 +1703,8 @@ indexGateway:
   # -- Set the optional grpc service protocol. Ex: "grpc", "http2" or "https"
   appProtocol:
     grpc: ""
+
+deploymentMode: Distributed
 
 memcached:
   readinessProbe:
