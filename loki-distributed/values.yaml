@@ -533,7 +533,6 @@ ingester:
 distributor:
   # -- Number of replicas for the distributor
   replicas: 3
-  maxUnavailable: 2
   # -- hostAliases to add
   hostAliases: []
   #  - ip: 1.2.3.4
@@ -616,7 +615,7 @@ distributor:
                 {{- include "loki.distributorSelectorLabels" . | nindent 12 }}
             topologyKey: failure-domain.beta.kubernetes.io/zone
   # -- Pod Disruption Budget maxUnavailable
-  maxUnavailable: null
+  maxUnavailable: 2
   # -- Max Surge for distributor pods
   maxSurge: 0
   # -- Node selector for distributor pods
@@ -632,7 +631,6 @@ distributor:
 querier:
   # -- Number of replicas for the querier
   replicas: 3
-  maxUnavailable: 2
   # -- hostAliases to add
   hostAliases: []
   #  - ip: 1.2.3.4
@@ -726,7 +724,7 @@ querier:
                 {{- include "loki.querierSelectorLabels" . | nindent 12 }}
             topologyKey: failure-domain.beta.kubernetes.io/zone
   # -- Pod Disruption Budget maxUnavailable
-  maxUnavailable: null
+  maxUnavailable: 2
   # -- Max Surge for querier pods
   maxSurge: 0
   # -- Node selector for querier pods
@@ -757,8 +755,6 @@ querier:
 queryFrontend:
   # -- Number of replicas for the query-frontend
   replicas: 2
-  
-  maxUnavailable: 1
   # -- hostAliases to add
   hostAliases: []
   #  - ip: 1.2.3.4
@@ -841,7 +837,7 @@ queryFrontend:
                 {{- include "loki.queryFrontendSelectorLabels" . | nindent 12 }}
             topologyKey: failure-domain.beta.kubernetes.io/zone
   # -- Pod Disruption Budget maxUnavailable
-  maxUnavailable: null
+  maxUnavailable: 1
   # -- Node selector for query-frontend pods
   nodeSelector: {}
   # -- Tolerations for query-frontend pods
@@ -1619,7 +1615,6 @@ indexGateway:
   enabled: true
   # -- Number of replicas for the index-gateway
   replicas: 2
-  maxUnavailable: 1
   # -- Whether the index gateway should join the memberlist hashring
   joinMemberlist: true
   # -- hostAliases to add
@@ -1677,7 +1672,7 @@ indexGateway:
                 {{- include "loki.indexGatewaySelectorLabels" . | nindent 12 }}
             topologyKey: failure-domain.beta.kubernetes.io/zone
   # -- Pod Disruption Budget maxUnavailable
-  maxUnavailable: null
+  maxUnavailable: 1
   # -- Node selector for index-gateway pods
   nodeSelector: {}
   # -- Tolerations for index-gateway pods
