@@ -100,7 +100,7 @@ cluster:
 
   storage:
     size: 8Gi
-    storageClass: ""
+    storageClass: "manual"
 
   # -- The UID of the postgres user inside the image, defaults to 26
   postgresUID: 26
@@ -164,7 +164,7 @@ cluster:
 
   monitoring:
     # -- Whether to enable monitoring
-    enabled: false
+    enabled: true
     podMonitor:
       # -- Whether to enable the PodMonitor
       enabled: true
